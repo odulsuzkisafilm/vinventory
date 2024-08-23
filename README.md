@@ -110,3 +110,6 @@ Swagger documentation is available at http://localhost:8080/swagger/index.html.
 - export CC=gcc
 - export CXX=g++
 - export CGO_CFLAGS="-Wno-deprecated"
+
+## Acknowledgements
+Thanks to [Valensas](https://valensas.com) for the opportunity to work on this project.
