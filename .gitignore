@@ -1,0 +1,24 @@
+.DS_Store
+
+backend/dist/
+backend/docs/
+backend/.idea/
+backend/.env
+backend/.git/
+!backend/dist/config.yaml
+backend/README.md
+
+backend/vinventory
+backend/vinventory-0.1.0.tgz
+backend/*.test
+
+frontend/.env
+frontend/.git/
+# !frontend/.git/hooks/pre-push
+# !frontend/.git/hooks/pre-commit
+# !frontend/.git/hooks/post-commit
+# !frontend/.git/hooks/post-checkout
+frontend/node_modules
+frontend/README.md
+
+.idea/

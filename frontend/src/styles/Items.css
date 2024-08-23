@@ -1,0 +1,21 @@
+.upload {
+  padding-top: 15px;
+  display: block;
+}
+
+.image-gallery {
+  margin-top: 20px;
+}
+
+.image-gallery h3 {
+  margin-bottom: 10px;
+}
+
+.image-gallery img {
+  margin-right: 10px;
+}
+
+.image-gallery img.small-image {
+  width: 100px;
+  height: auto;
+}

@@ -1,0 +1,13 @@
+Dockerfile
+
+.dockerignore
+
+.git
+.gitignore
+vinventory-0.1.0.tgz
+
+.DS_Store
+.idea
+.vscode
+
+*.log

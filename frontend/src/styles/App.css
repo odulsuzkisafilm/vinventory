@@ -1,0 +1,41 @@
+:root {
+  --colorBgContainer: #2c9625;
+  --borderRadiusLG: 8px;
+}
+
+.siteBackground {
+  border-radius: var(--borderRadiusLG);
+  background: var(--colorBgContainer);
+  padding: 24px;
+  min-height: 280px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  position: fixed;
+  z-index: 1000;
+}
+
+.header.at-top {
+  box-shadow: none;
+}
+
+.header.scrolled {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.menu {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.button {
+  font-size: 16px;
+  width: 64px;
+  height: 64px;
+}

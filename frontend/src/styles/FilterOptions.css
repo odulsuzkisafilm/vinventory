@@ -1,0 +1,38 @@
+form .filterFormItem .ant-form-item-label > label {
+  color: rgb(187, 218, 247) !important;
+  font-weight: bold;
+}
+
+.ant-input,
+.ant-select-selector,
+.ant-picker,
+.ant-cascader-picker,
+.ant-input-number,
+.ant-tree-select,
+.ant-upload,
+.ant-radio,
+.ant-checkbox,
+.ant-slider-track,
+.ant-slider-handle {
+  background-color: #ffffff !important;
+  border-color: #555 !important;
+}
+
+.ant-radio-checked .ant-radio-inner,
+.ant-checkbox-checked .ant-checkbox-inner,
+.ant-switch-checked {
+  background-color: #1890ff !important;
+}
+
+.ant-form-item-control {
+  margin-top: -5px;
+}
+
+.ClearButton {
+  color: #ffffff;
+  background-color: #1890ff;
+  border-color: #1890ff;
+  padding: 8px 16px; /* Padding around the text */
+  font-size: 16px; /* Font size */
+  margin-top: 20px;
+}

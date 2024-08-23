@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "vinventory.smtpConfigMapName" . }}
+  labels:
+    {{- include "vinventory.labels" . | nindent 4 }}
+data:
+  SMTP_HOST: {{ .Values.env.smtpHost | quote }}
+  SMTP_PORT: {{ .Values.env.smtpPort | quote }}
+  SMTP_USERNAME: {{ .Values.env.smtpUsername | quote }}
+  SENDER_EMAIL: {{ .Values.env.senderEmail | quote }}
+  RECEIVER_EMAIL: {{ .Values.env.receiverEmail | quote }}

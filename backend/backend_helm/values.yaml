@@ -1,0 +1,43 @@
+replicaCount: 2
+
+image:
+  repository: docker.io/odulsuzkisafilm/vinventory
+  tag: 1.0.4
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+
+resources: {}
+nodeSelector: {}
+tolerations: []
+affinity: {}
+
+serviceAccount:
+  create: true
+
+env:
+  # SMTP
+  smtpHost: "smtp.gmail.com"
+  smtpPort: "587"
+  smtpUsername: "intermefe@gmail.com"
+  senderEmail: "intermefe@gmail.com"
+  receiverEmail: "odulsuzkisafilm@yahoo.com"
+
+  # DB
+  dbHost: "localhost"
+  dbPort: "5432"
+  dbUser: "odulsuz"
+  dbName: "postgres"
+
+  # MINIO
+  minioEndpoint: "192.168.128.164:9000"
+  minioUseSsl: "false"
+  minioBucket: "vinventory"
+
+egress:
+  enabled: true
+
+cronjob:
+  enabled: true

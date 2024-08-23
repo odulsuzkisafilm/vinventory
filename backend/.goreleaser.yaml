@@ -1,0 +1,56 @@
+version: 2
+project_name: vinventory
+builds:
+  - id: vinventory
+    main: ./cmd/server/main.go
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    ldflags:
+      - -s -w
+    binary: vinventory
+
+dockers:
+  - image_templates:
+      - "docker.io/{{ .Env.DOCKER_USERNAME }}/vinventory:latest"
+      - "docker.io/{{ .Env.DOCKER_USERNAME }}/vinventory:{{ .Tag }}"
+    dockerfile: Dockerfile
+    build_flag_templates:
+      - --build-arg=version={{ .Version }}
+
+archives:
+  - id: vinventory
+    format_overrides:
+      - goos: windows
+        format: zip
+    builds:
+      - vinventory
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    files:
+      - src: "./dist/{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}*{{ if eq .Os `windows` }}/vinventory.exe{{ else }}/vinventory{{ end }}"
+        dst: "vinventory{{ if eq .Os `windows` }}.exe{{ end }}"
+      - src: "./dist/config.yaml"
+        dst: "config/config.yaml"
+    wrap_in_directory: true
+
+nfpms:
+  - formats: ["deb", "rpm", "apk"]
+    license: Apache-2.0
+    maintainer: support@swagger.io
+    description: This is a server for managing virtual inventory.
+
+release:
+  gitlab:
+    owner: valensas/intern-projects/vinventory
+    name: backend
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'

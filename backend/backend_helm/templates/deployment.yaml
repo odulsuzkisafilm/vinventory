@@ -1,0 +1,125 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "vinventory.fullname" . }}
+  labels:
+    {{- include "vinventory.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "vinventory.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "vinventory.selectorLabels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ include "vinventory.serviceAccountName" . }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 80
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          env:
+            # Secrets
+            - name: AZURE_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: vinventory-secrets-azure
+                  key: AZURE_CLIENT_ID
+            - name: AZURE_TENANT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: vinventory-secrets-azure
+                  key: AZURE_TENANT_ID
+            - name: AZURE_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: vinventory-secrets-azure
+                  key: AZURE_CLIENT_SECRET
+            - name: SMTP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: vinventory-secrets-smtp
+                  key: SMTP_PASSWORD
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: vinventory-secrets-database
+                  key: DB_PASSWORD
+            - name: MINIO_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: vinventory-secrets-minio
+                  key: MINIO_ACCESS_KEY
+            - name: MINIO_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: vinventory-secrets-minio
+                  key: MINIO_SECRET_KEY
+            # Database environment variables
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "vinventory.postgresConfigMapName" . }}
+                  key: DB_HOST
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "vinventory.postgresConfigMapName" . }}
+                  key: DB_PORT
+            - name: DB_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "vinventory.postgresConfigMapName" . }}
+                  key: DB_USER
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "vinventory.postgresConfigMapName" . }}
+                  key: DB_NAME
+            # SMTP environment variables
+            - name: SMTP_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "vinventory.smtpConfigMapName" . }}
+                  key: SMTP_HOST
+            - name: SMTP_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "vinventory.smtpConfigMapName" . }}
+                  key: SMTP_PORT
+            - name: SMTP_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "vinventory.smtpConfigMapName" . }}
+                  key: SMTP_USERNAME
+            - name: SENDER_EMAIL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "vinventory.smtpConfigMapName" . }}
+                  key: SENDER_EMAIL
+            - name: RECEIVER_EMAIL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "vinventory.smtpConfigMapName" . }}
+                  key: RECEIVER_EMAIL
+            # Minio environment variables
+            - name: MINIO_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "vinventory.minioConfigMapName" . }}
+                  key: MINIO_ENDPOINT
+            - name: MINIO_BUCKET
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "vinventory.minioConfigMapName" . }}
+                  key: MINIO_BUCKET
+            - name: MINIO_USE_SSL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "vinventory.minioConfigMapName" . }}
+                  key: MINIO_USE_SSL

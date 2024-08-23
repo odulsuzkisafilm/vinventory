@@ -1,0 +1,57 @@
+{{- if .Values.cronjob.enabled }}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "vinventory.fullname" . }}-cronjob
+  labels:
+    {{- include "vinventory.labels" . | nindent 4 }}
+spec:
+  schedule: "0 0 * * *"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            {{- include "vinventory.selectorLabels" . | nindent 8 }}
+        spec:
+          serviceAccountName: {{ include "vinventory.serviceAccountName" . }}
+          containers:
+            - name: {{ .Chart.Name }}-cronjob
+              image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+              imagePullPolicy: {{ .Values.image.pullPolicy }}
+              command: ["/bin/sh", "-c"]
+              args:
+                - ./vinventory notification_job
+              env:
+                - name: SMTP_HOST
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{ include "vinventory.smtpConfigMapName" . }}
+                      key: SMTP_HOST
+                - name: SMTP_PORT
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{ include "vinventory.smtpConfigMapName" . }}
+                      key: SMTP_PORT
+                - name: SMTP_USERNAME
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{ include "vinventory.smtpConfigMapName" . }}
+                      key: SMTP_USERNAME
+                - name: SMTP_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ include "vinventory.fullname" . }}-secrets
+                      key: SMTP_PASSWORD
+                - name: SENDER_EMAIL
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{ include "vinventory.smtpConfigMapName" . }}
+                      key: SENDER_EMAIL
+                - name: RECEIVER_EMAIL
+                  valueFrom:
+                    configMapKeyRef:
+                      name: {{ include "vinventory.smtpConfigMapName" . }}
+                      key: RECEIVER_EMAIL
+          restartPolicy: OnFailure
+{{- end }}

@@ -1,0 +1,23 @@
+image: golang:1.22.4
+
+stages:
+  - lint
+  - build
+
+lint:
+  stage: lint
+  script:
+    - curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.42.1
+    - golangci-lint run ./...
+
+build:
+  stage: build
+  script:
+    - mkdir -p bin
+    - go install github.com/swaggo/swag/cmd/swag@latest
+    - export PATH=$(go env GOPATH)/bin:$PATH
+    - swag init -g cmd/server/main.go
+    - go build -o bin ./...
+  artifacts:
+    paths:
+      - bin

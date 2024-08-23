@@ -1,0 +1,15 @@
+.searchContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 16px;
+}
+
+.searchInput {
+  margin-right: 15px;
+}
+
+.DropDownOrder {
+  width: 294px;
+  margin-right: 5px;
+}

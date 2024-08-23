@@ -1,0 +1,18 @@
+linters:
+  enable-all: true
+  disable:
+    # Remove warnings for deprecated linters
+    - deadcode
+    - exhaustivestruct
+    - golint
+    - gomnd
+    - ifshort
+    - interfacer
+    - maligned
+    - scopelint
+    - structcheck
+    - varcheck
+    
+
+run:
+  timeout: 5m
