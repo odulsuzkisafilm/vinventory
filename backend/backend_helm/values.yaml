@@ -21,15 +21,15 @@ env:
   # SMTP
   smtpHost: "smtp.gmail.com"
   smtpPort: "587"
-  smtpUsername: "intermefe@gmail.com"
-  senderEmail: "intermefe@gmail.com"
-  receiverEmail: "odulsuzkisafilm@yahoo.com"
+  smtpUsername: "[yourSendingUsername]"
+  senderEmail: "[yourSendingEmailAddress]"
+  receiverEmail: "[yourReceiverEmailAddress]"
 
   # DB
   dbHost: "localhost"
   dbPort: "5432"
-  dbUser: "odulsuz"
-  dbName: "postgres"
+  dbUser: "[yourDbUser]"
+  dbName: "[yourDbName]"
 
   # MINIO
   minioEndpoint: "192.168.128.164:9000"
